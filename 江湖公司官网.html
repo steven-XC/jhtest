@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>江湖公司 · 主官网</title>
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Noto Serif SC",serif,Microsoft YaHei;
+}
+:root{
+    /* ==========浅色主题(默认)========== */
+    --bg-main:#fffdf5;
+    --bg-card:#fffef8;
+    --bg-nav:#fffef8;
+    --text-main:#444;
+    --text-title:#b8860b;
+    --text-muted:#777;
+    --border-gold:#b8860b;
+    --border-soft:#e6d7a9;
+    --bg-button:#b8860b;
+    --bg-button-hover:#966c00;
+    --shadow:0 8px 20px rgba(184,134,11,0.18);
+    --transition-all:background 0.35s ease,color 0.35s ease,border-color 0.35s ease;
+    --fade-duration:0.35s ease-out;
+}
+/* ==========深色主题变量========== */
+[data-theme="dark"]{
+    --bg-main:#141418;
+    --bg-card:#1e1e24;
+    --bg-nav:#1a1a20;
+    --text-main:#e2e2e2;
+    --text-title:#ffcc44;
+    --text-muted:#aaa;
+    --border-gold:#d4a42c;
+    --border-soft:#383222;
+    --bg-button:#d4a42c;
+    --bg-button-hover:#b3881c;
+    --shadow:0 8px 20px rgba(0,0,0,0.5);
+}
+html,body{transition:var(--transition-all);}
+body{
+    background:var(--bg-main);
+    color:var(--text-main);
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+}
+
+/* ==========顶部导航栏========== */
+.navbar{
+    position:sticky;
+    top:0;
+    z-index:100;
+    background:var(--bg-nav);
+    border-bottom:1px solid var(--border-soft);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:14px 32px;
+    transition:var(--transition-all);
+}
+.brand{
+    font-size:22px;
+    font-weight:bold;
+    color:var(--text-title);
+    letter-spacing:3px;
+    cursor:pointer;
+}
+.nav-links{
+    display:flex;
+    gap:28px;
+    align-items:center;
+}
+.nav-link{
+    background:none;
+    border:none;
+    color:var(--text-main);
+    font-size:16px;
+    cursor:pointer;
+    padding:6px 2px;
+    border-bottom:2px solid transparent;
+    transition:0.2s;
+    font-family:inherit;
+}
+.nav-link:hover{color:var(--text-title);}
+.nav-link.active{
+    color:var(--text-title);
+    border-bottom-color:var(--border-gold);
+}
+.theme-toggle{
+    background:transparent;
+    border:1.5px solid var(--border-gold);
+    color:var(--text-title);
+    border-radius:8px;
+    padding:6px 14px;
+    cursor:pointer;
+    font-size:14px;
+    font-family:inherit;
+    transition:0.25s;
+}
+.theme-toggle:hover{background:var(--bg-button);color:#fff;}
+
+/* ==========页面视图切换========== */
+.view{
+    flex:1;
+    display:none;
+    animation:fadeIn var(--fade-duration);
+}
+.view.active{display:block;}
+@keyframes fadeIn{
+    from{opacity:0;transform:translateY(10px);}
+    to{opacity:1;transform:translateY(0);}
+}
+.container{
+    max-width:1080px;
+    margin:0 auto;
+    padding:48px 24px;
+}
+
+/* ==========首页 Hero========== */
+.hero{
+    text-align:center;
+    padding:100px 24px;
+}
+.hero h1{
+    font-size:52px;
+    letter-spacing:6px;
+    color:var(--text-title);
+    margin-bottom:20px;
+}
+.hero p{
+    font-size:18px;
+    color:var(--text-muted);
+    line-height:1.9;
+    max-width:640px;
+    margin:0 auto 32px;
+}
+.hero-buttons{
+    display:flex;
+    gap:18px;
+    justify-content:center;
+    flex-wrap:wrap;
+}
+.btn{
+    padding:12px 30px;
+    background:var(--bg-button);
+    color:#fff;
+    border:none;
+    border-radius:8px;
+    font-size:16px;
+    cursor:pointer;
+    transition:0.2s;
+    font-family:inherit;
+    text-decoration:none;
+    display:inline-block;
+}
+.btn:hover{background:var(--bg-button-hover);transform:translateY(-2px);}
+.btn-ghost{
+    background:transparent;
+    color:var(--text-title);
+    border:1.5px solid var(--border-gold);
+}
+.btn-ghost:hover{background:var(--bg-button);color:#fff;}
+
+/* ==========板块标题========== */
+.section-title{
+    color:var(--text-title);
+    font-size:30px;
+    margin-bottom:24px;
+    border-left:4px solid var(--border-gold);
+    padding-left:14px;
+}
+.section-desc{
+    color:var(--text-muted);
+    line-height:1.9;
+    margin-bottom:36px;
+}
+
+/* ==========公司简介========== */
+.about-text{
+    line-height:2;
+    font-size:17px;
+}
+.about-text p{margin-bottom:18px;}
+
+/* ==========旗下应用卡片========== */
+.app-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+    gap:24px;
+}
+.app-card{
+    background:var(--bg-card);
+    border:1.5px solid var(--border-soft);
+    border-radius:14px;
+    padding:28px 24px;
+    display:flex;
+    flex-direction:column;
+    transition:0.25s ease;
+}
+.app-card:hover{
+    transform:translateY(-6px);
+    box-shadow:var(--shadow);
+    border-color:var(--border-gold);
+}
+.app-icon{
+    font-size:38px;
+    margin-bottom:16px;
+}
+.app-card h3{
+    color:var(--text-title);
+    font-size:21px;
+    margin-bottom:10px;
+}
+.app-card p{
+    color:var(--text-muted);
+    line-height:1.7;
+    flex:1;
+    margin-bottom:22px;
+}
+.app-card .btn{
+    align-self:flex-start;
+    padding:10px 22px;
+    font-size:15px;
+}
+
+/* ==========公司历史 时间线========== */
+.timeline{
+    position:relative;
+    padding-left:28px;
+}
+.timeline::before{
+    content:"";
+    position:absolute;
+    left:8px;
+    top:0;
+    bottom:0;
+    width:2px;
+    background:var(--border-soft);
+}
+.timeline-item{
+    position:relative;
+    padding-bottom:32px;
+}
+.timeline-item::before{
+    content:"";
+    position:absolute;
+    left:-24px;
+    top:6px;
+    width:12px;
+    height:12px;
+    border-radius:50%;
+    background:var(--border-gold);
+}
+.timeline-item .year{
+    color:var(--text-title);
+    font-weight:bold;
+    font-size:18px;
+    margin-bottom:6px;
+}
+.timeline-item .event{
+    line-height:1.8;
+    color:var(--text-main);
+}
+
+/* ==========底部版权========== */
+footer{
+    border-top:1px solid var(--border-soft);
+    padding:28px 24px;
+    text-align:center;
+    color:var(--text-muted);
+    transition:var(--transition-all);
+}
+footer .footer-links{
+    display:flex;
+    gap:24px;
+    justify-content:center;
+    align-items:center;
+    margin-bottom:12px;
+    flex-wrap:wrap;
+}
+footer a{
+    color:var(--text-title);
+    text-decoration:none;
+    transition:0.2s;
+}
+footer a:hover{text-decoration:underline;}
+footer .copyright{font-size:14px;}
+
+/* 移动端适配 */
+@media(max-width:680px){
+    .navbar{padding:12px 16px;flex-wrap:wrap;gap:10px;}
+    .nav-links{gap:16px;}
+    .hero h1{font-size:36px;}
+    .container{padding:32px 16px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== 顶部导航 ===== -->
+<nav class="navbar">
+    <div class="brand" data-nav="home">江湖公司</div>
+    <div class="nav-links">
+        <button class="nav-link" data-nav="home">首页</button>
+        <button class="nav-link" data-nav="about">公司简介</button>
+        <button class="nav-link" data-nav="apps">旗下应用</button>
+        <button class="nav-link" data-nav="history">公司历史</button>
+        <button class="theme-toggle" id="themeToggle">切换深色模式</button>
+    </div>
+</nav>
+
+<!-- ===== 视图：首页 ===== -->
+<section class="view active" id="view-home">
+    <div class="hero">
+        <h1>江湖公司</h1>
+        <p>以匠心聚同道，以作品立江湖。我们专注于打造有趣、好用的小型应用与社团项目，在代码与创意之间，走一条属于自己的侠路。</p>
+        <div class="hero-buttons">
+            <button class="btn" data-nav="apps">浏览旗下应用</button>
+            <button class="btn btn-ghost" data-nav="about">了解公司</button>
+        </div>
+    </div>
+</section>
+
+<!-- ===== 视图：公司简介 ===== -->
+<section class="view" id="view-about">
+    <div class="container">
+        <h2 class="section-title">公司简介</h2>
+        <div class="about-text">
+            <p>江湖公司是一个由爱好者自发组成的小型团队，取名"江湖"，意在致敬经典的社团文化：不靠规模取胜，而靠每一件作品的诚意说话。</p>
+            <p>我们的业务范围涵盖网页应用、社团赛事平台、趣味工具与互动项目。从规则制定到界面设计，从前端实现到后续维护，每一个环节都由团队成员亲自打磨。</p>
+            <p>公司的宗旨很简单：让使用者觉得顺手、觉得有意思；让参与创作的人得到成长与认可。路还长，我们一步一步走。</p>
+        </div>
+    </div>
+</section>
+
+<!-- ===== 视图：旗下应用 ===== -->
+<section class="view" id="view-apps">
+    <div class="container">
+        <h2 class="section-title">旗下应用</h2>
+        <p class="section-desc">以下为团队已上线或正在维护的应用，点击卡片按钮即可跳转进入。</p>
+        <div class="app-grid" id="appGrid"></div>
+    </div>
+</section>
+
+<!-- ===== 视图：公司历史 ===== -->
+<section class="view" id="view-history">
+    <div class="container">
+        <h2 class="section-title">公司历史</h2>
+        <div class="timeline" id="timeline"></div>
+    </div>
+</section>
+
+<!-- ===== 底部 ===== -->
+<footer>
+    <div class="footer-links">
+        <a id="githubLink" href="#" target="_blank" rel="noopener">GitHub 仓库</a>
+    </div>
+    <div class="copyright" id="copyright">© 江湖公司 版权所有</div>
+</footer>
+
+<script>
+/* ======================================================================
+ * 【配置区 1】旗下应用列表 —— 改这里即可调整卡片与跳转链接
+ *  - icon   : 卡片图标（emoji 或文字）
+ *  - name   : 应用名称
+ *  - desc   : 应用简介
+ *  - url    : 点击按钮跳转的地址（留 "" 则按钮不跳转，可自行扩展）
+ * ==================================================================== */
+const appList = [
+    {
+        icon: "✒️",
+        name: "江湖弹笔社",
+        desc: "弹笔社团赛事平台，包含官方赛事、授权赛事、活动赛事与公告板块，支持深浅色主题。",
+        url: "https://Steven-xc.github.io/jhtb"
+    },
+    {
+        icon: "📱",
+        name: "江湖手机",
+        desc: "就江湖手机啊",
+        url: ""
+    },
+    {
+        icon: "🛠️",
+        name: "更多应用筹备中",
+        desc: "新的项目正在规划与开发中，敬请期待。",
+        url: ""
+    }
+];
+
+/* ======================================================================
+ * 【配置区 2】公司历史时间线 —— 改这里即可调整历史条目
+ *  - year : 年份 / 阶段标识
+ *  - event: 事件描述
+ * ==================================================================== */
+const historyList = [
+    { year: "起步阶段", event: "团队雏形形成，确立“江湖”之名，开始构思第一个社团项目。" },
+    { year: "第一作", event: "江湖弹笔社官网上线，建立赛事板块与公告体系。" },
+    { year: "工具尝试", event: "制作交通模拟类小工具，练习前端页面与交互动画。" },
+    { year: "未来", event: "持续扩充旗下应用，完善团队分工与作品规范。" }
+];
+
+/* ======================================================================
+ * 【配置区 3】底部链接与版权 —— 改这里即可
+ * ==================================================================== */
+const siteConfig = {
+    githubUrl: "https://github.com/",   // GitHub 仓库地址，替换为真实链接
+    copyright: "© 江湖公司 版权所有"       // 底部版权文字
+};
+/* ==================================================================== */
+
+
+// ---------- 渲染旗下应用卡片 ----------
+function renderApps(){
+    const grid = document.getElementById("appGrid");
+    appList.forEach(app=>{
+        const card = document.createElement("div");
+        card.className = "app-card";
+        const btnHtml = app.url
+            ? `<a class="btn" href="${app.url}" target="_blank" rel="noopener">点击进入</a>`
+            : `<button class="btn" disabled style="opacity:0.55;cursor:not-allowed;">敬请期待</button>`;
+        card.innerHTML = `
+            <div class="app-icon">${app.icon}</div>
+            <h3>${app.name}</h3>
+            <p>${app.desc}</p>
+            ${btnHtml}
+        `;
+        grid.appendChild(card);
+    });
+}
+
+// ---------- 渲染公司历史时间线 ----------
+function renderHistory(){
+    const timeline = document.getElementById("timeline");
+    historyList.forEach(item=>{
+        const el = document.createElement("div");
+        el.className = "timeline-item";
+        el.innerHTML = `<div class="year">${item.year}</div><div class="event">${item.event}</div>`;
+        timeline.appendChild(el);
+    });
+}
+
+// ---------- 底部配置生效 ----------
+document.getElementById("githubLink").href = siteConfig.githubUrl;
+document.getElementById("copyright").innerText = siteConfig.copyright;
+
+// ---------- 视图切换（hash 路由） ----------
+const navButtons = document.querySelectorAll("[data-nav]");
+const views = document.querySelectorAll(".view");
+
+function switchView(id){
+    views.forEach(v=>v.classList.remove("active"));
+    document.getElementById("view-" + id).classList.add("active");
+    navButtons.forEach(b=>{
+        b.classList.toggle("active", b.dataset.nav === id);
+    });
+    location.hash = id;
+}
+
+navButtons.forEach(btn=>{
+    btn.addEventListener("click", ()=> switchView(btn.dataset.nav));
+});
+
+// 读取 hash 初始定位
+function initView(){
+    const hash = location.hash.replace("#","");
+    const valid = ["home","about","apps","history"];
+    switchView(valid.includes(hash) ? hash : "home");
+}
+window.addEventListener("hashchange", initView);
+
+// ---------- 深浅色模式（localStorage 记忆） ----------
+const themeToggle = document.getElementById("themeToggle");
+const htmlRoot = document.documentElement;
+
+function applyTheme(mode){
+    if(mode === "dark"){
+        htmlRoot.setAttribute("data-theme","dark");
+        themeToggle.innerText = "切换浅色模式";
+    }else{
+        htmlRoot.removeAttribute("data-theme");
+        themeToggle.innerText = "切换深色模式";
+    }
+    localStorage.setItem("theme", mode);
+}
+themeToggle.addEventListener("click", ()=>{
+    const next = htmlRoot.hasAttribute("data-theme") ? "light" : "dark";
+    applyTheme(next);
+});
+
+// ---------- 初始化 ----------
+renderApps();
+renderHistory();
+applyTheme(localStorage.getItem("theme") || "light");
+initView();
+</script>
+</body>
+</html>
